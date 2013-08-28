@@ -1,0 +1,11 @@
+<div ng-show="tags.length">
+	<div class="tags">
+		<p>Tag list</p>
+		<ul>
+			<li ng-repeat="tag in tags"><a href="#/tag/{{tag.id}}">{{tag.name}}</a></li>
+		</ul>
+	<div>
+</div>
+<div ng-hide="tags.length">
+	<p>No tag.</p>
+</div>

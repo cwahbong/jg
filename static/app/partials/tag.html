@@ -1,0 +1,18 @@
+<div ng-show="subtags.length || problems.length">
+	<p>Item tagged by {{tag}}.</p>
+	<div class="tags" ng-show="subtags.length">
+		<p>Tags</p>
+		<ul>
+			<li ng-repeat="subtag in subtags"><a href="#/tag/{{subtag.id}}">{{subtag.name}}</a></li>
+		</ul>
+	</div>
+	<div class="problems" ng-show="problems.length">
+		<p>Problems</p>
+		<ul>
+			<li ng-repeat="problem in problems"><a href="#/problem/{{problem.id}}">{{problem.name}}</a></li>
+		</ul>
+	</div>
+</div>
+<div ng-hide="subtags.length || problems.length">
+	<p>No item tagged by {{tag}}.</p>
+</div>
