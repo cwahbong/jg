@@ -1,25 +1,37 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"github.com/cwahbong/jg/backend"
 	"log"
 	"net/http"
 )
 
 const (
-	DbName = "jg_test"
+	defaultPort           = 80
+	defaultStaticFilePath = "./static/app/"
 )
 
+type Args struct {
+	Port           uint
+	StaticFilePath string
+}
+
+func parseArgs() *Args {
+	var args Args
+	flag.UintVar(&args.Port, "p", defaultPort, "Specify the port.")
+	flag.StringVar(&args.StaticFilePath, "s", defaultStaticFilePath, "Specify the static file path.")
+	flag.Parse()
+	return &args
+}
+
 func main() {
-	// TODO set static file path by parsing args
-	staticFilePath := "./static/app/"
+	args := parseArgs()
 
-	http.Handle("/", http.FileServer(http.Dir(staticFilePath)))
-	http.Handle("/rpc/json", backend.RpcServer())
-
-	// userprofile
 	server := http.Server{
-		Addr: ":9765",
+		Addr:    fmt.Sprintf(":%d", args.Port),
+		Handler: backend.ServeMux(args.StaticFilePath),
 	}
 	log.Fatal(server.ListenAndServe())
 }
