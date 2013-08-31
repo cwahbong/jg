@@ -5,6 +5,16 @@
 		<li>Brief description: {{problem.brief}}</li>
 		<li>Downloadable resources:</li>
 	</ul>
-
+</div>
+<div ng-show="problem.tagged.length">
+	<p>Tagged by:</p>
+	<ul>
+		<li ng-repeat="tag in problem.tagged"><a href="#/tag/{{tag.id}}">{{tag.name}}</a></li>
+	</ul>
+</div>
+<div ng-hide="problem.tagged.length">
+	<p>Not tagged by anyone.</p>
+</div>
+<div>
 	<p><a href="#/submit/{{problem.id}}">Submit</a></p>
 </div>

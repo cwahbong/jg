@@ -62,14 +62,29 @@ type ProblemByIdArgs struct {
 }
 
 type ProblemByIdReply struct {
-	// TODO
+	Name   string  `json:"name"`
+	Brief  string  `json:"brief"`
+	Tagged []Named `json:"tagged"`
+	// TODO supported method
+	// TODO downloadable resource
 }
 
-func (*Jg) ProblemById(request *http.Request, args *ProblemByIdArgs, reply ProblemByIdReply) error {
+func (*Jg) ProblemById(request *http.Request, args *ProblemByIdArgs, reply *ProblemByIdReply) error {
 	session := defaultDial()
 	defer session.Close()
-	// c := session.DB(dbName).C("problem")
-	// c.Find(bson.M{"id"}).One(&reply.)
+	c := session.DB(dbName).C("problem")
+
+	var problem Problem
+	c.Find(bson.M{"id": args.Id}).One(&problem)
+
+	reply.Name = problem.Name
+	reply.Brief = problem.Brief
+	reply.Tagged = make([]Named, len(problem.Tagged))
+
+	ct := session.DB(dbName).C("tag")
+	for idx, objId := range problem.Tagged {
+		ct.Find(bson.M{"_id": objId}).One(&reply.Tagged[idx])
+	}
 	return nil
 }
 

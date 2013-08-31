@@ -57,8 +57,17 @@ angular.module('jgApp.controllers', []).
       });
   }).
   controller('ProblemCtrl', function($scope, $http, $routeParams) {
-    $scope.problem = {id: "np", name: "Name placeholder", brief: "blabla"};
-    // TODO
+    $http.post('/rpc/json',{
+      method: "Jg.ProblemById",
+      params: [{"id": $routeParams.problemId}],
+      id: 0
+    }).
+      success(function(data, status, headers, config) {
+        $scope.problem = angular.fromJson(data).result
+      }).
+      error(function(data, status, headers, config){
+        // TODO on error
+      });
   });
 
 /* angular.module('jgApp.directives', []).
