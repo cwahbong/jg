@@ -1,27 +1,27 @@
-<div ng-show="subtags.length || problems.length">
+<div ng-show="tag.tags.length || tag.problems.length">
 	<p>Item tagged by {{tag.name}}.</p>
-	<div class="tags" ng-show="subtags.length">
+	<div class="tags" ng-show="tag.tags.length">
 		<p>Tags</p>
 		<ul>
-			<li ng-repeat="subtag in subtags"><a href="#/tag/{{subtag.id}}">{{subtag.name}}</a></li>
+			<li ng-repeat="subtag in tag.tags"><a href="#/tag/{{subtag.id}}">{{subtag.name}}</a></li>
 		</ul>
 	</div>
-	<div class="problems" ng-show="problems.length">
+	<div class="problems" ng-show="tag.problems.length">
 		<p>Problems</p>
 		<ul>
-			<li ng-repeat="problem in problems"><a href="#/problem/{{problem.id}}">{{problem.name}}</a></li>
+			<li ng-repeat="problem in tag.problems"><a href="#/problem/{{problem.id}}">{{problem.name}}</a></li>
 		</ul>
 	</div>
 </div>
-<div ng-hide="subtags.length || problems.length">
+<div ng-hide="tag.tags.length || tag.problems.length">
 	<p>No item tagged by {{tag.name}}.</p>
 </div>
-<div ng-show="tagged.length">
+<div ng-show="tag.tagged.length">
 	<p>Tagged by:</p>
 	<ul>
-		<li ng-repeat="tagby in tagged"><a href="#/tag/{{tagby.id}}">{{tagby.name}}</a></li>
+		<li ng-repeat="tagby in tag.tagged"><a href="#/tag/{{tagby.id}}">{{tagby.name}}</a></li>
 	</ul>
 </div>
-<div ng-hide="tagged.length">
+<div ng-hide="tag.tagged.length">
 	<p>Not tagged by anyone.</p>
 </div>
