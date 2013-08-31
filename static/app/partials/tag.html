@@ -16,3 +16,12 @@
 <div ng-hide="subtags.length || problems.length">
 	<p>No item tagged by {{tag.name}}.</p>
 </div>
+<div ng-show="tagged.length">
+	<p>Tagged by:</p>
+	<ul>
+		<li ng-repeat="tagby in tagged"><a href="#/tag/{{tagby.id}}">{{tagby.name}}</a></li>
+	</ul>
+</div>
+<div ng-hide="tagged.length">
+	<p>Not tagged by anyone.</p>
+</div>

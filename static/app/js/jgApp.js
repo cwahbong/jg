@@ -44,9 +44,13 @@ angular.module('jgApp.controllers', []).
     }).
       success(function(data, status, headers, config) {
         var obj = angular.fromJson(data);
-        $scope.tag = obj.result.tag;
+        $scope.tag = {
+          id: $routeParams.tagId,
+          name: obj.result.name,
+        };
         $scope.subtags = obj.result.tags;
         $scope.problems = obj.result.problems;
+        $scope.tagged = obj.result.tagged;
       }).
       error(function(data, status, headers, config) {
         // TODO on error

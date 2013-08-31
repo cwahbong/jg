@@ -16,7 +16,7 @@ type Jg struct{}
 type PrimaryTagsArgs struct{}
 
 type PrimaryTagsReply struct {
-	Tags []Tag `json:"tags"`
+	Tags []Named `json:"tags"`
 }
 
 func (*Jg) PrimaryTags(request *http.Request, args *PrimaryTagsArgs, reply *PrimaryTagsReply) error {
@@ -32,19 +32,28 @@ type TagByIdArgs struct {
 }
 
 type TagByIdReply struct {
-	Tag      Tag       `json:"tag"`
-	Tags     []Tag     `json:"tags"`
-	Problems []Problem `json:"problems"`
+	Name     string  `json:"name"`
+	Tags     []Named `json:"tags"`
+	Problems []Named `json:"problems"`
+	Tagged   []Named `json:"tagged"`
 }
 
 func (*Jg) TagById(request *http.Request, args *TagByIdArgs, reply *TagByIdReply) error {
 	session := defaultDial()
 	defer session.Close()
 	ct := session.DB(dbName).C("tag")
-	ct.Find(bson.M{"id": args.Id}).One(&reply.Tag)
-	ct.Find(bson.M{"tagged": args.Id}).All(&reply.Tags)
+
+	var tag Tag
+	ct.Find(bson.M{"id": args.Id}).One(&tag)
+	reply.Name = tag.Name
+	reply.Tagged = make([]Named, len(tag.Tagged))
+	for idx, objId := range tag.Tagged {
+		ct.Find(bson.M{"_id": objId}).One(&reply.Tagged[idx])
+	}
+
+	ct.Find(bson.M{"tagged": tag.ObjId}).All(&reply.Tags)
 	cp := session.DB(dbName).C("problem")
-	cp.Find(bson.M{"tagged": args.Id}).All(&reply.Problems)
+	cp.Find(bson.M{"tagged": tag.ObjId}).All(&reply.Problems)
 	return nil
 }
 
