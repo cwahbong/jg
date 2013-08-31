@@ -37,7 +37,6 @@ angular.module('jgApp.controllers', []).
       });
   }).
   controller('TagCtrl', function($scope, $http, $routeParams) {
-    $scope.tag = $routeParams.tagId;
     $http.post('/rpc/json', {
       method: "Jg.TagById",
       params: [{"id": $routeParams.tagId}],
@@ -45,6 +44,7 @@ angular.module('jgApp.controllers', []).
     }).
       success(function(data, status, headers, config) {
         var obj = angular.fromJson(data);
+        $scope.tag = obj.result.tag;
         $scope.subtags = obj.result.tags;
         $scope.problems = obj.result.problems;
       }).

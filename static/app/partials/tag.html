@@ -1,5 +1,5 @@
 <div ng-show="subtags.length || problems.length">
-	<p>Item tagged by {{tag}}.</p>
+	<p>Item tagged by {{tag.name}}.</p>
 	<div class="tags" ng-show="subtags.length">
 		<p>Tags</p>
 		<ul>
@@ -14,5 +14,5 @@
 	</div>
 </div>
 <div ng-hide="subtags.length || problems.length">
-	<p>No item tagged by {{tag}}.</p>
+	<p>No item tagged by {{tag.name}}.</p>
 </div>
