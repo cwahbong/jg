@@ -1,37 +1,17 @@
 package main
 
 import (
-	"flag"
-	"fmt"
-	"github.com/cwahbong/jg/backend"
-	"log"
-	"net/http"
+	"github.com/cwahbong/jg/commands"
+	"os"
 )
-
-const (
-	defaultPort           = 80
-	defaultStaticFilePath = "./static/app/"
-)
-
-type Args struct {
-	Port           uint
-	StaticFilePath string
-}
-
-func parseArgs() *Args {
-	var args Args
-	flag.UintVar(&args.Port, "p", defaultPort, "Specify the port.")
-	flag.StringVar(&args.StaticFilePath, "s", defaultStaticFilePath, "Specify the static file path.")
-	flag.Parse()
-	return &args
-}
 
 func main() {
-	args := parseArgs()
-
-	server := http.Server{
-		Addr:    fmt.Sprintf(":%d", args.Port),
-		Handler: backend.ServeMux(args.StaticFilePath),
+	switch os.Args[1] {
+	case "server":
+		commands.JgServer(os.Args[2:])
+	case "help":
+		fallthrough
+	default:
+		commands.JgHelp(os.Args[2:])
 	}
-	log.Fatal(server.ListenAndServe())
 }
