@@ -13,13 +13,13 @@ const (
 	defaultStaticFilePath = "./static/app/"
 )
 
-type ServerArgs struct {
+type serverArgs struct {
 	Port           uint
 	StaticFilePath string
 }
 
-func JgServer(argstrs []string) {
-	var args ServerArgs
+func jgServer(argstrs []string) {
+	var args serverArgs
 	flagSet := flag.NewFlagSet("jg-server", flag.ExitOnError)
 	flagSet.UintVar(&args.Port, "p", defaultPort, "Specify the port.")
 	flagSet.StringVar(&args.StaticFilePath, "s", defaultStaticFilePath, "Specify the static file path.")

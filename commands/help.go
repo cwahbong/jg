@@ -1,5 +1,9 @@
 package commands
 
-func JgHelp(argstrs []string) {
-	// TODO
+import (
+	"fmt"
+)
+
+func jgHelp(argstrs []string) {
+	fmt.Println("Not implemented yet.")
 }
