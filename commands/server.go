@@ -18,7 +18,7 @@ type serverArgs struct {
 	StaticFilePath string
 }
 
-func jgServer(argstrs []string) {
+func jgServer(argstrs []string) error {
 	var args serverArgs
 	flagSet := flag.NewFlagSet("jg-server", flag.ExitOnError)
 	flagSet.UintVar(&args.Port, "p", defaultPort, "Specify the port.")
@@ -30,4 +30,5 @@ func jgServer(argstrs []string) {
 		Handler: backend.ServeMux(args.StaticFilePath),
 	}
 	log.Fatal(server.ListenAndServe())
+	return nil
 }

@@ -1,11 +1,11 @@
 package commands
 
 import (
+	"errors"
 	"fmt"
-	"os"
 )
 
-type Command func(args []string)
+type Command func(args []string) error
 
 func CommandFunc(cmd string) Command {
 	switch cmd {
@@ -22,7 +22,7 @@ func Empty() {
 }
 
 func badCommand(cmd string) Command {
-	return func(args []string) {
-		fmt.Fprintf(os.Stderr, "Command \"%s\" does not exists, see \"jg help\" for more information.\n", cmd)
+	return func(args []string) error {
+		return errors.New(fmt.Sprintf(`Command "%s" does not exists, see "jg help" for more information.`, cmd))
 	}
 }
