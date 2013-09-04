@@ -20,7 +20,7 @@ type PrimaryTagsReply struct {
 }
 
 func (*Jg) PrimaryTags(request *http.Request, args *PrimaryTagsArgs, reply *PrimaryTagsReply) error {
-	session := defaultDial()
+	session := DefaultDial()
 	defer session.Close()
 	c := session.DB(dbName).C("tag")
 	c.Find(bson.M{"primary": true}).All(&reply.Tags)
@@ -39,7 +39,7 @@ type TagByIdReply struct {
 }
 
 func (*Jg) TagById(request *http.Request, args *TagByIdArgs, reply *TagByIdReply) error {
-	session := defaultDial()
+	session := DefaultDial()
 	defer session.Close()
 	ct := session.DB(dbName).C("tag")
 
@@ -70,7 +70,7 @@ type ProblemByIdReply struct {
 }
 
 func (*Jg) ProblemById(request *http.Request, args *ProblemByIdArgs, reply *ProblemByIdReply) error {
-	session := defaultDial()
+	session := DefaultDial()
 	defer session.Close()
 	c := session.DB(dbName).C("problem")
 

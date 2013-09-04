@@ -9,6 +9,8 @@ type Command func(args []string) error
 
 func CommandFunc(cmd string) Command {
 	switch cmd {
+	case "initdb":
+		return jgInitdb
 	case "server":
 		return jgServer
 	case "help":
